@@ -868,12 +868,13 @@ class Backend(SQLBackend, CanListCatalog, CanCreateDatabase, NoExampleLoader):
             )
 
         if sink_from is not None:
-            create_stmt = f"CREATE SINK {table.sql(self.dialect)} FROM {sink_from}"
+            create_stmt = f"CREATE SINK IF NOT EXISTS {table.sql(self.dialect)} FROM {sink_from}"
         else:
             create_stmt = sge.Create(
                 this=table,
                 kind="SINK",
                 expression=self.compile(obj),
+                exists=True,
             ).sql(self.dialect)
         create_stmt = (
             create_stmt
