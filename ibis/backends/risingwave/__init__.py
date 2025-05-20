@@ -787,7 +787,7 @@ class Backend(SQLBackend, CanListCatalog, CanCreateDatabase, NoExampleLoader):
             for include_type, column_name in (includes or {}).items()
         )
 
-        create_stmt = sge.Create(kind="SOURCE", this=target, properties=properties)
+        create_stmt = sge.Create(kind="SOURCE", this=target, properties=properties, exists=True)
 
         create_stmt = create_stmt.sql(self.dialect) + data_and_encode_format(
             data_format, encode_format, encode_properties
